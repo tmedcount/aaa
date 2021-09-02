@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace="인터페이스의 경로명+이름" -->
+<mapper namespace="com.human.app.iRoom">
+	<!-- select id="인터페이스의 메소드" resultType="인터페이스의 반환데이터타입" -->	
+	<select id="getRoomList" resultType="com.human.app.Roominfo">
+		select a.roomcode, a.name roomname, b.name typename, a.howmany, a.howmuch
+  		  from room a, roomtype b
+  		 where a.type = b.typecode
+  		 order by roomcode
+	</select>
+	<select id="getRoomType" resultType="com.human.app.Roomtype">
+		select typecode, name from roomtype order by typecode
+	</select>
+	<delete id="doDeleteRoom">
+		delete from room where roomcode=#{param1}	
+	</delete>
+	<insert id="doAddRoom">
+		insert into room(roomcode, name, type, howmany, howmuch)
+		values(seq_room.nextval, #{param1}, #{param2}, #{param3}, #{param4})	
+	</insert>
+	<update id="doUpdateRoom">
+		update room set name=#{param2}, type=#{param3}, howmany=#{param4}, howmuch=#{param5}
+		where roomcode=#{param1}
+	</update>
+</mapper>
