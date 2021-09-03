@@ -16,7 +16,7 @@
       background-color: whitesmoke;
     }
 
-    select#roomList {
+    select#room_menu {
       background-color: rgb(240, 240, 53);
     }
 
@@ -72,48 +72,33 @@
     <section>
       <h4>객실목록</h4>
       <div>
-        <select id="roomList" size="9">
-          <option>백두산 Suite Room 4명</option>
-          <option>한라산 Family Room 6명</option>
-          <option>태조산</option>
-          <option>치악산</option>
-          <option>설악산</option>
-          <option>한라산</option>
-          <option>금강산</option>
-          <option>덕유산</option>
-          <option>계룡산</option>
+        <select id="room_menu" size="10">
+
         </select>
       </div>
 
       <div class="b">
         <ul>
-          <li>객실이름 - <input type="text" /></li>
+          <li>객실이름 - <input id="txtName" type="text" /><input type=hidden id=roomcode></li>
           <li>
             객실분류 -
-            <select name="" id="">
-              <option value="">Suite Room</option>
-              <option value="">Family Room</option>
-              <option value="">Double Room</option>
-              <option value="">Single Room</option>
-              <option value="">Domitory</option>
+            <select id="selType" size=5>
+		    		<c:forEach items="${type}" var="type">
+		    			<option value='${type.typecode}'>${type.name}</option>
+		    		</c:forEach>
             </select>
           </li>
           <li>
             숙박가능인원 -
-            <select name="" id="">
-              <option value="">1</option>
-              <option value="">2</option>
-              <option value="">3</option>
-              <option value="">4</option>
-              <option value="">5</option>
-            </select>
-            명
+			<input type=number id=txtNum>명
           </li>
-          <li class="charge">1박요금 - <input type="text" />원</li>
+          <li class="charge">
+          	1박요금 - <input type=number id=txtPrice>원
+          </li>
           <li class="Con">
-            <input type="button" value="등록" />
-            <input type="button" value="삭제" />
-            <input type="button" value="Clear" />
+   			<input type=button value='등록' id=btnAdd>&nbsp;
+   			<input type=button value='삭제' id=btnDelete>&nbsp;
+   			<input type=button value='취소' id=btnEmpty>
           </li>
         </ul>
       </div>
@@ -133,7 +118,7 @@
    			 <table>
     			<tr>
     				<td align=right>객실명</td>
-    				<td><input type=text id=txtName><input type=hidden id=roomcode></td>
+    				<td><input type=text id=txtName><input type=text id=roomcode></td>
     			</tr>
     			<tr>
 			    	<td align=right>타입</td>
@@ -153,8 +138,8 @@
 			   	</tr>
 			   	<tr>
 			   		<td colspan=2 align=center>
-			   			<input type=button value='등록' id=btnAdd>&nbsp;
-			   			<input type=button value='삭제' id=btnDelete>&nbsp;
+			   			<input type=button value='등록' id=btnAdd>
+			   			<input type=button value='삭제' id=btnDelete>
 			   			<input type=button value='취소' id=btnEmpty>
 			   		</td>
    				</tr>	 

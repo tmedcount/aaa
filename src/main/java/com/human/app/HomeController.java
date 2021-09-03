@@ -80,14 +80,19 @@ public class HomeController {
 		  String uid = hsr.getParameter("loginid");
 		  String pass = hsr.getParameter("passcode");
 		  
-		  // model.addAttribute("loginid", uid);
-		  // model.addAttribute("password", pass);
+		  iMember member = sqlSession.getMapper(iMember.class);
+		  int n = member.doCheckUser(uid, pass);
 		  
-		  HttpSession session = hsr.getSession();
-		  session.setAttribute("loginid", uid);
-		  
-		  return "redirect:/booking";
+		  if(n>0) {
+			  HttpSession session = hsr.getSession();
+			  session.setAttribute("loginid", uid);
+			  
+			  return "redirect:/booking";
+		  } else {
+			  return "home";
 		  }
+
+	  }
 	
 	  @RequestMapping(value="/booking", method=RequestMethod.GET)
 	  public String booking(HttpServletRequest hsr) {
@@ -99,36 +104,35 @@ public class HomeController {
 			  return "booking";
 		  }
 	  }
-	/*
-	 * @RequestMapping("/newinfo") public String newInfo(HttpServletRequest hsr,
-	 * Model model) { String rname = hsr.getParameter("realname"); String uid =
-	 * hsr.getParameter("loginid"); String pass1 = hsr.getParameter("passcode1");
-	 * String pass2 = hsr.getParameter("passcode2"); String mobile =
-	 * hsr.getParameter("mobile");
-	 * 
-	 * model.addAttribute("realname", rname); model.addAttribute("loginid", uid);
-	 * model.addAttribute("passcode1", pass1); model.addAttribute("passcode2",
-	 * pass2); model.addAttribute("mobile", mobile);
-	 * 
-	 * return "newinfo"; }
-	 */
-	
-	@RequestMapping("/newinfo")
-	public String newInfo(@RequestParam("realname") String rname,
-						  @RequestParam("loginid") String uid,
-						  @RequestParam("passcode1") String pass1,
-						  @RequestParam("passcode2") String pass2,
-						  @RequestParam("mobile") String mobile,
-						  Model model) {
 		
-		model.addAttribute("realname", rname);
-		model.addAttribute("loginid", uid);
-		model.addAttribute("passcode1", pass1);
-		model.addAttribute("passcode2", pass2);
-		model.addAttribute("mobile", mobile);
+	@RequestMapping(value="/signin", method=RequestMethod.POST)
+	public String signin(HttpServletRequest hsr) {
+		String realname = hsr.getParameter("realname");
+		String loginid = hsr.getParameter("loginid");
+		String passcode = hsr.getParameter("passcode1");
 		
-		return "newinfo";
+		iMember member = sqlSession.getMapper(iMember.class);
+		
+		member.doSignin(realname, loginid, passcode);
+		
+		return "home";
 	}
+	  
+//	@RequestMapping("/newinfo")
+//	public String newInfo(@RequestParam("realname") String rname,
+//						  @RequestParam("loginid") String uid,
+//						  @RequestParam("passcode1") String pass1,
+//						  @RequestParam("passcode2") String pass2,
+//						  Model model) {
+//		
+//		model.addAttribute("realname", rname);
+//		model.addAttribute("loginid", uid);
+//		model.addAttribute("passcode1", pass1);
+//		model.addAttribute("passcode2", pass2);
+//
+//		
+//		return "newinfo";
+//	}
 	
 	@RequestMapping("/room")
 	// 여기서 interface호출하고 결과를 room.jsp에 전달.

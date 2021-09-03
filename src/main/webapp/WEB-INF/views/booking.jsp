@@ -30,6 +30,10 @@
       padding-right: 40px;
       display: flex;
     }
+    
+    #2 {
+    	display: block;
+    }
 
     input#1 {
       display: block;
@@ -48,11 +52,11 @@
       width: 20px;
     }
 
-    tr:nth-child(7) > td {
+    tr:nth-child(8) {
       text-align: center;
     }
 
-    tr:nth-child(7) > td > input[type="button"] {
+    #btnComplete, #btnClear, #btnDelete {
       padding: 5px 30px;
       background-color: dodgerblue;
     }
@@ -67,61 +71,66 @@
     <section>
       <div id="a">
         <fieldset>
-          숙박기간: <input type="date" name="" id="" /> ~
+          예약기간 - <input type="date" name="" id="room_date" /> ~
           <input type="date" name="" id="" /><br />
-          객실분류: <input type="text" list="list" />
-          <datalist id="list">
-            <option value="1"></option>
-            <option value="2"></option>
-            <option value="3"></option>
-            <option value="4"></option>
-            <option value="5"></option>
+          객실종류 - <input type="text" list="list" /><input type=button value=조회>
+          <datalist id="room_list">
+			
           </datalist>
         </fieldset>
         <fieldset>
-          <legend><b>예약가능</b></legend>
-          <select name="" id="" size="10">
-            <option>백두산 Suite Room 4명</option>
-            <option>한라산 Family Room 6명</option>
-            <option>태조산</option>
-            <option>치악산</option>
-            <option>설악산</option>
+          <legend><b>예약가능객실</b></legend>
+          <select name="" id="" size="20">
+				
           </select>
         </fieldset>
       </div>
-      <form action="">
+      <form id=2 action="">
         <table>
           <tr>
-            <td>객실이름 -</td>
-            <td><input type="text" /></td>
+	          <td>객실명 - </td>
+	          <td><input type="text" /></td>
           </tr>
           <tr>
-            <td>숙박기간 -</td>
+	          <td>객실종류 - </td>
+	          <td>
+		          <select name="", id="">
+		          
+		          </select>
+	          </td>
+          </tr>
+          <tr>
+	          <td>예약인원 - </td>
+	          <td>
+	          	  <input type=text>명		
+	          </td>
+          </tr>
+          <tr>
+              <td>최대인원 - </td>
+              <td>
+		      	  <input type=text>명              
+              </td>
+          </tr>
+          <tr>
+            <td>예약기간 - </td>
             <td>
-              <input type="date" name="" id="" /> ~
-              <input type="date" name="" id="" />
+	            <input type="date" name="" id="" /> ~
+	            <input type="date" name="" id="" />
             </td>
           </tr>
-          <tr>
-            <td id="personnel">숙박인원 -</td>
-            <td><input type="text" />명</td>
-          </tr>
-          <tr>
-            <td>1박 비용 -</td>
-            <td><input type="text" />원</td>
-          </tr>
-          <tr>
-            <td>총 숙박비 -</td>
-            <td><input type="text" />원</td>
-          </tr>
-          <tr>
+	      <tr>
+	      	<td>예약자명 - </td>
+	      	<td>
+	      		<input type=text>
+	      	</td>
+	      </tr>
             <td>예약자 모바일 -</td>
             <td><input type="" /></td>
           </tr>
           <tr>
-            <td><input type="button" value="등록" /></td>
-            <td><input type="button" value="취소" /></td>
-            <td><input type="button" value="Clear" /></td>
+            <td><input type=button id="btnComplete" value="예약완료" /></td>
+            <td><input type=button id="btnClear" value="비우기" /></td>
+            <td><input type=button id="btnDelete" value="예약취소" /></td>
           </tr>
         </table>
       </form>
