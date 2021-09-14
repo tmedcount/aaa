@@ -10,11 +10,25 @@
 		values (seq_book.nextval, #{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7})
 	</insert>
 	<select id="getBookingList" resultType="com.human.app.Bookinginfo">
-		select a.bookcode, b.name roomname, b.type typename, a.human,
-        		b.howmany, a.checkin, a.checkout, a.total, a.mobile,  a.name
-		  from booking a, room b
-		 where a.checkout > #{param2} and #{param1} > a.checkin
-		 and a.roomcode=b.roomcode
-		 order by a.checkin;
+		select a.bookcode, b.name roomname, c.name typename, a.human, b.howmany, a.checkin, a.checkout, a.total, a.mobile, a.name
+  		  from booking a, room b, roomtype c
+  		 <![CDATA[where a.checkin >= #{param1} and a.checkout <= #{param2} 
+		  		 and a.roomcode = b.roomcode 
+		  		 and b.type = c.typecode]]> order by checkin
 	</select>
+ 	<select id="getAvailableBooking" resultType="com.human.app.Bookinginfo"> 
+		select a.roomcode, a.name roomname, b.name typename, a.howmany, a.howmuch
+		  from room a, roomtype b
+		 where a.roomcode in (
+		  select roomcode from room
+		   minus
+		  select distinct roomcode from booking
+		   <![CDATA[where checkout > #{param2} and checkin < #{param1}) and a.type = b.typecode]]>
+	</select>
+	<delete id="deleteBooking">
+		delete from booking where bookcode = #{param1}
+	</delete>
+	<update id="updateBooking">
+		update booking set human=#{param2}, name=#{param3}, mobile=#{param4} where bookcode=#{param1}
+	</update>
 </mapper>

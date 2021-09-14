@@ -272,6 +272,6 @@ prefix="c" %>
             "text"
           );
         }
-      });
+      })
   </script>
 </html>

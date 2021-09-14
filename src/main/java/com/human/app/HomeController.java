@@ -229,19 +229,21 @@ public class HomeController {
 	@RequestMapping(value="/getBookingList", method=RequestMethod.POST, produces = "application/text; charset=utf8")
 	@ResponseBody
 	public String getBookList(HttpServletRequest hsr) {
+		String checkin = hsr.getParameter("checkin");
+		String checkout = hsr.getParameter("checkout");
+
 		iBooking booking = sqlSession.getMapper(iBooking.class);
-		ArrayList<Bookinginfo> bookinginfo = booking.getBookingList();
+		ArrayList<Bookinginfo> bookinginfo = booking.getBookingList(checkin, checkout);
 		
-		String checkin = hsr.getParameter("day1");
-		String checkout = hsr.getParameter("day2");
-				
 		// 찾아진 데이터로 JSONArray만들기
 		JSONArray ja = new JSONArray();
 		for(int i=0; i<bookinginfo.size(); i++) {
 			JSONObject jo = new JSONObject();
 			jo.put("bookcode", bookinginfo.get(i).getBookcode());
-			jo.put("roomcode", bookinginfo.get(i).getRoomcode());
+			jo.put("roomname", bookinginfo.get(i).getRoomname());
+			jo.put("typename", bookinginfo.get(i).getTypename());
 			jo.put("human", bookinginfo.get(i).getHuman());
+			jo.put("howmany", bookinginfo.get(i).getHowmany());
 			jo.put("checkin", bookinginfo.get(i).getCheckin());
 			jo.put("checkout", bookinginfo.get(i).getCheckout());
 			jo.put("total", bookinginfo.get(i).getTotal());
@@ -249,7 +251,58 @@ public class HomeController {
 			jo.put("name", bookinginfo.get(i).getName());
 			ja.add(jo);			
 		}
+		// System.out.println(ja.toString());
+		return ja.toString();
+	}
+	
+	@RequestMapping(value="/getAvailableBooking", method=RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String getAvailableBooking(HttpServletRequest hsr) {
+		String checkin = hsr.getParameter("checkin");
+		String checkout = hsr.getParameter("checkout");
+		
+		System.out.println(checkin);
+		System.out.println(checkout);
+		
+		iBooking booking = sqlSession.getMapper(iBooking.class);
+		ArrayList<Bookinginfo> bookinginfo = booking.getAvailableBooking(checkin, checkout);
+		
+		JSONArray ja = new JSONArray();
+		for(int i=0; i<bookinginfo.size(); i++) {
+			JSONObject jo = new JSONObject();
+			jo.put("roomcode", bookinginfo.get(i).getRoomcode());
+			jo.put("roomname", bookinginfo.get(i).getRoomname());
+			jo.put("typename", bookinginfo.get(i).getTypename());
+			jo.put("howmany", bookinginfo.get(i).getHowmany());
+			jo.put("howmuch", bookinginfo.get(i).getHowmuch());
+			ja.add(jo);			
+		}
 		System.out.println(ja.toString());
 		return ja.toString();
+
+	}
+	
+	@RequestMapping(value="/deleteBooking", method=RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String deleteBooking(HttpServletRequest hsr) {
+		int bookcode = Integer.parseInt(hsr.getParameter("bookcode"));
+		iBooking booking = sqlSession.getMapper(iBooking.class);
+		booking.deleteBooking(bookcode);
+		return "ok";
+	}
+	
+	@RequestMapping(value="/updateBooking", method=RequestMethod.POST, produces = "application/text; charset=utf8")
+	@ResponseBody
+	public String updateBooking(HttpServletRequest hsr) {
+		iBooking booking = sqlSession.getMapper(iBooking.class);
+		
+		int bookcode = Integer.parseInt(hsr.getParameter("bookcode"));
+		int human = Integer.parseInt(hsr.getParameter("human"));
+		String name = hsr.getParameter("name");
+		String mobile = hsr.getParameter("mobile");
+					
+		booking.updateBooking(bookcode, human, name, mobile);
+		
+		return "ok";
 	}
 }
