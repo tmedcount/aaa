@@ -80,6 +80,9 @@ prefix="c" %>
     tr {
       line-height: 35px;
     }
+    #checkout {
+      margin-left: 80px;	
+    }
   </style>
   <body>
     <!-- Navbar -->
@@ -108,15 +111,13 @@ prefix="c" %>
       <section id="look_up">
         <div class="look_up">
           <fieldset>
-            예약기간 -&nbsp;<input type="date" name="" id="checkin" val=""/> ~
-            <input type="date" name="" id="checkout" val=""/><br />
+            예약기간 -&nbsp;<input type="date" name="" id="checkin" val=""/><br><input type="date" name="" id="checkout" val=""/><br />
             객실종류 -&nbsp;
             <select class="room">
-              <option>
+              <option value="all">전체</option>
                 <c:forEach items="${type}" var="type">
                   <option value="${type.typecode}">${type.name}</option>
                 </c:forEach>
-              </option>
             </select>
             <input type="button" value="조회" id="btnSearch" />
             <datalist id=""> </datalist>
@@ -218,6 +219,7 @@ prefix="c" %>
       .on("click", "#btnSearch", function () {
         let checkin = $("#checkin").val();
         let checkout = $("#checkout").val();
+        // let typecode = $(".room option:selected").val();
 
         $.post(
           "http://localhost:8080/app/getBookingList",

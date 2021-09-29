@@ -231,6 +231,14 @@ public class HomeController {
 	public String getBookList(HttpServletRequest hsr) {
 		String checkin = hsr.getParameter("checkin");
 		String checkout = hsr.getParameter("checkout");
+		/*
+		 * String typecode = hsr.getParameter("typecode");
+		 * 
+		 * String whichroom = "";
+		 * 
+		 * if(typecode!="" && typecode!=null && typecode!="all") { whichroom =
+		 * " and typecode ='"+typecode+"'"; }
+		 */
 
 		iBooking booking = sqlSession.getMapper(iBooking.class);
 		ArrayList<Bookinginfo> bookinginfo = booking.getBookingList(checkin, checkout);

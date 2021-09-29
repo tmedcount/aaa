@@ -12,7 +12,7 @@
 	<select id="getBookingList" resultType="com.human.app.Bookinginfo">
 		select a.bookcode, b.name roomname, c.name typename, a.human, b.howmany, a.checkin, a.checkout, a.total, a.mobile, a.name
   		  from booking a, room b, roomtype c
-  		 <![CDATA[where a.checkin >= #{param1} and a.checkout <= #{param2} 
+  		 <![CDATA[where a.checkin >= #{param1} and a.checkout <= #{param2}
 		  		 and a.roomcode = b.roomcode 
 		  		 and b.type = c.typecode]]> order by checkin
 	</select>

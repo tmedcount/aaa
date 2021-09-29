@@ -122,23 +122,10 @@ $(document)
 			alert("비밀번호가 일치하지 않습니다.");
 			return false;
 		}
+		alert("회원가입이 완료되었습니다.");
 		return true;
 	})
-	.on("submit", "#frmLogin", function () {
-        let pstr = $.trim($("input[name=loginid]").val());
-        $("input[name=loginid]").val(pstr);
-        pstr = $.trim($("input[name=passcode]").val());
-        $("input[name=passcode]").val(pstr);
-        if ($("input[name=loginid]").val() == "") {
-          alert("로그인 아이디를 입력하시오.");
-          return false;
-        }
-        if ($("input[name=passcode]").val() == "") {
-          alert("비밀번호를 입력하시오.");
-          return false;
-        }
-        return true;
-      })
+
 
 </script>
 </html>
